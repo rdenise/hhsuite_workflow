@@ -1,0 +1,25 @@
+.DS_Store
+__pycache__
+.python-version
+.snakemake
+
+# Test
+test_*
+logs*
+results*
+myfile*
+
+# Executables
+*.pyc
+
+# Distribution
+*.egg-info
+
+# test files
+.cache
+
+# pycharm project files
+.idea
+*.ipynb
+.ipynb*
+MacOSX10.9.sdk*
