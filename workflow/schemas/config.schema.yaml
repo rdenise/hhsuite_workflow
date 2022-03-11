@@ -1,0 +1,119 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+properties:
+  alignments:
+    type: string
+  aln_ext:
+    type: string
+  format_aln:
+    type: string
+    enum: ["fas","a2m", "a3m", "sto", "psi", "clu"]
+  project_name:
+    type: string
+  output_folder:
+    type: string
+
+  default_hhmake_options:
+    type: object
+    properties:
+      id:
+        type: number
+        minimum: 0
+        maximum: 100      
+      diff:
+        type: number
+        minimum: 0
+      cov:
+        type: number
+        minimum: 0
+        maximum: 100  
+      qid:
+        type: number
+        minimum: 0
+        maximum: 100  
+      qsc:
+        type: number
+        minimum: 0
+        maximum: 100  
+      input_aln:
+        type: string
+    required:
+      - id
+      - diff
+      - cov
+      - qid
+      - qsc
+      - qsc
+      - input_aln
+
+  default_hhblits_options:
+    type: object
+    properties:
+      e_val:
+        type: number
+        minimum: 0
+        maximum: 1
+      qid:
+        type: number
+        minimum: 0
+        maximum: 100       
+      cov:
+        type: number
+        minimum: 0
+        maximum: 100
+    required:
+      - e_val
+      - qid
+      - cov
+
+  default_hhsuitedb_options:
+    type: object
+    properties:  
+      comparison:
+        type: string
+        enum: ["hhm","a3m"]
+    required:
+      - comparison
+
+  default_values_plot:
+    type: object
+    properties:
+      color: 
+        type: string
+      colored_border:
+        type: boolean
+      annotation_table:
+        type: string
+      e_val:
+        type: number
+        minimum: 0
+        maximum: 1
+      qid:
+        type: number
+        minimum: 0
+        maximum: 1  
+      cov:
+        type: number
+        minimum: 0
+        maximum: 1
+    required:
+      - e_val
+      - qid
+      - cov        
+      - color
+      - colored_border
+      - annotation_table
+
+required:
+  - alignments
+  - project_name
+  - output_folder
+  - aln_ext
+  - default_hhmake_options
+  - format_aln
+  - default_hhblits_options
+  - default_values_plot

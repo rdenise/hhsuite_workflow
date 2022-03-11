@@ -1,0 +1,57 @@
+# path to your alignment folder
+alignments: "/home/rdenise/Documents/Fabian_Bastiannssen_Internship/HHsuite_analysis/alignments/regions"
+
+# extension of alignment file if a3m please add a3m as extention
+aln_ext: "trimmed.aln"
+
+# Alignment format: 'fas': aligned fasta, 'a2m':a2m format, 'a3m': a3m format, 'sto': Stockholm format, 'psi': format as read by PSI-BLAST using the -B option, 'clu': Clustal format
+format_aln: "fas"
+
+# name of the project 
+project_name: test_a3m
+
+# path to the result folder
+output_folder: /home/rdenise/Documents/Fabian_Bastiannssen_Internship/HHsuite_analysis
+
+# Options for hhmake
+default_hhmake_options:
+    # Maximum pairwise sequence identity (%)
+    id: 90
+    # Filter MSA by selecting most diverse set of sequences, keeping at least this many seqs in each MSA block of length 50
+    diff: 100
+    # Minimum coverage with query (%)
+    cov: 0
+    # Minimum sequence identity with query (%)
+    qid: 0
+    # Minimum score per column with query
+    qsc: 0
+    # Input alignment format: a2m: use A2M/A3M as input, 'first': use FASTA as input (columns with residue in 1st sequence are match states), '[0-100]': columns with fewer than X% gaps are match states
+    input_aln: a2m
+
+# HHblits options
+default_hhblits_options:
+    # E-value threshold
+    e_val: 0.0001
+    # Maximum pairwise sequence identity (%)
+    qid: 0
+    # Minimum coverage with master sequence (%)
+    cov: 0
+
+default_hhsuitedb_options:
+    # Comparison is based on: ['hhm', 'a3m']
+    comparison: a3m
+
+# Default value for plot
+default_values_plot:
+    # Color
+    color: '#131516' # This color is a dark grey similar to black
+    # Turn color of the border a darker shade infer from the background if True else set the color to black
+    colored_border: True
+    # Annotation table that contain color for each hhm profiles, if non leave it empty ''
+    annotation_table: config/annotations.tsv
+    # E-value threshold
+    e_val: 0.0001
+    # Maximum pairwise sequence identity [0,1]
+    qid: 0
+    # Minimum coverage with master sequence [0,1]
+    cov: 50

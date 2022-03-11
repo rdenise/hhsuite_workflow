@@ -1,0 +1,123 @@
+import os, sys
+import glob
+
+FOLDER_ANALYSIS = "/Volumes/@home/These/Analyses/Analysis_similarity/20181127_all_TXSS"
+FOLDER_HHM = os.path.join(FOLDER_ANALYSIS, "hhm")
+FILES_ALN = glob.glob(os.path.join(FOLDER_ANALYSIS, "alignments", "*"))
+NAME_FILE = [os.path.basename(i).split(".")[0] for i in FILES_ALN]
+FOLDER_HHR = os.path.join(FOLDER_ANALYSIS, "hhr")
+COVERAGE = 0 # between 0 and 1
+MINVALUE = 1e-3
+HHSUITE_LOCAL = "/Users/rdenise/Documents/Software_download/hhsuite-3.0/bin"
+
+##########################################################################
+##########################################################################
+
+rule all:
+    input:
+        os.path.join(FOLDER_ANALYSIS, "results", "network_Pvalue_{:.0e}_coverage_{}.graphml".format(MINVALUE,int(COVERAGE*100)))
+
+##########################################################################
+##########################################################################
+
+
+rule hhm_make :
+    input :
+        lambda wilcards :  [myfile for myfile in FILES_ALN if wilcards.name in myfile][0]
+    output :
+        os.path.join(FOLDER_HHM, "{name}.hhm")
+    threads :
+        1
+    params :
+        name = "{name}",
+        hhmake = os.path.join(HHSUITE_LOCAL, "hhmake")
+    shell :
+        """
+        {params.hhmake} -M 50 -i {input} -o {output} -name {params.name} -add_cons
+        """
+
+##########################################################################
+##########################################################################
+
+rule pal_file :
+    input :
+        expand(os.path.join(FOLDER_HHM, "{name}.hhm"), name=NAME_FILE)
+    output :
+        os.path.join(FOLDER_ANALYSIS, "profiles_hhm_plus_archaellum_hhm.ffdata")
+    threads :
+        1
+    params :
+        folder_hhm = FOLDER_HHM,
+        ffindex_build = os.path.join(HHSUITE_LOCAL, "ffindex_build"),
+        pal_file = os.path.join(FOLDER_ANALYSIS, "profiles_hhm_plus_archaellum_hhm.pal"),
+        index_file = os.path.join(FOLDER_ANALYSIS, "profiles_hhm_plus_archaellum_hhm.ffindex")
+
+    shell : 
+        """
+        ls {params.folder_hhm}/* > {params.pal_file}
+        {params.ffindex_build} -s -f {params.pal_file} {output} {params.index_file}
+        """
+
+##########################################################################
+##########################################################################
+
+rule analysis_hhr :
+    input :
+        profile = os.path.join(FOLDER_HHM, "{name}.hhm"),
+        ffdata_file = os.path.join(FOLDER_ANALYSIS, "profiles_hhm_plus_archaellum_hhm.ffdata")
+    output : 
+        os.path.join(FOLDER_HHR, "{name}.hhr")
+    threads :
+        2
+    params :
+        folder_hhm = FOLDER_HHM,
+        hhsearch = os.path.join(HHSUITE_LOCAL, "hhsearch"),
+        db = "profiles_hhm_plus_archaellum" # The name of the database is the name before "_hhm.extension"
+    shell :
+        """
+        {params.hhsearch} -i {input.profile} -o {output} -d {params.db} -maxres 500000
+        """
+
+##########################################################################
+##########################################################################
+# Don't know why it is here but it seems that you can directly compare HMM and alignment if it change anything in the results
+
+rule analysis_hhr_aln :
+    input :
+        profile = lambda wilcards :  [myfile for myfile in FILES_ALN if wilcards.name in myfile][0],
+        ffdata_file = os.path.join(FOLDER_ANALYSIS, "profiles_hhm_plus_archaellum_hhm.ffdata")
+    output : 
+        os.path.join(FOLDER_HHR, "{name}_align.hhr")
+    threads :
+        2
+    params :
+        folder_hhm = FOLDER_HHM,
+        hhsearch = os.path.join(HHSUITE_LOCAL, "hhsearch"),
+        db = "profiles_hhm_plus_archaellum" # The name of the database is the name before "_hhm.extension"
+    shell :
+        """
+        {params.hhsearch} -i {input.profile} -o {output} -d {params.db} -M 50 -add_cons -maxres 500000
+        """
+
+
+##########################################################################
+##########################################################################
+
+rule extract_hhr :
+    input :
+        expand(os.path.join(FOLDER_HHR, "{name}.hhr"), name=NAME_FILE)
+    output :
+        os.path.join(FOLDER_ANALYSIS, "results", "network_Pvalue_{evalue}_coverage_{coverage}.graphml")
+    params :
+        anotation_file = os.path.join(FOLDER_ANALYSIS, "annotation_color.def"),
+        hhr_folder = FOLDER_HHR,
+        parse_hhmsearch = "/Volumes/@home/script/python3/similarity_hhsearch/parse_hhmsearch.py",
+        folder_output = FOLDER_ANALYSIS,
+        coverage = COVERAGE,
+        value = MINVALUE
+    threads :
+        1
+    shell :
+        """        
+        python3 {params.parse_hhmsearch} -hhr {params.hhr_folder} -o {params.folder_output} -c {params.coverage} -t {params.value} -recip
+        """

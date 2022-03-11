@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+dependencies:
+  - pandas = 1.4.1
+  - matplotlib = 3.5.1
+  - numpy = 1.22.0
+  - networkx = 2.7.1
+  - graphviz = 3.0.0

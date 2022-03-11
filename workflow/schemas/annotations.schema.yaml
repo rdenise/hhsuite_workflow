@@ -1,0 +1,14 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: row of the seeds.tsv, seeds are the genes of known annotation you want to find in genomes
+type: object
+properties:
+  HMM:
+    type: string
+    description: HMM name, is will be the name of the alignment file without fasta
+  color:
+    type: string
+    description: color wanted for the gene in the plot at the end in HEX format
+
+required:
+  - HMM
+  - color
