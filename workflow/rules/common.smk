@@ -65,8 +65,10 @@ annotations_dtypes = {
     "color": "string",
 }
 
-annotations_table = pd.read_table(annotations_file, dtype=annotations_dtypes)
-
+if os.path.isfile(annotations_file):
+    annotations_table = pd.read_table(annotations_file, dtype=annotations_dtypes)
+else:
+    annotations_file = False
 
 ##########################################################################
 ##########################################################################
@@ -159,8 +161,9 @@ aln_ext = config["aln_ext"][1:] if config["aln_ext"].startswith('.') else config
 PROT, = glob_wildcards(os.path.join(config["alignments"], 
                        f"{{prot}}.{aln_ext}"))
 
-print(os.path.join(config["alignments"], 
-                       f"{{prot}}.{aln_ext}"))
+if not PROT:
+    PATH_GIVEN = os.path.join(config["alignments"], f"*.{aln_ext}")
+    sys.exit(f"ERROR: No files seems to be found. The path that you gave is: {PATH_GIVEN}")
 
 # Get the alignment folder right for hhmake
 if aln_format != "a3m":

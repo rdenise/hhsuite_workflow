@@ -1,5 +1,5 @@
 # path to your alignment folder
-alignments: "alignment_fodler"
+alignments: "alignment_folder"
 
 # extension of alignment file if a3m please add a3m as extention
 aln_ext: ".aln"
@@ -55,3 +55,4 @@ default_values_plot:
     qid: 0
     # Minimum coverage with master sequence [0,1]
     cov: 0.5
+    
