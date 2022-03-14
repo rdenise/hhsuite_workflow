@@ -106,8 +106,11 @@ with open(os.path.join(workflow.basedir, "../config/VERSION"), "rt") as version:
 # Name your project
 project_name = config["project_name"]
 
+# Output folder (needed because perl seems to be stupid as usual)
+out_folder = os.path.abspath(config["output_folder"])
+
 # Result folder
-OUTPUT_FOLDER = os.path.join(config["output_folder"], project_name)
+OUTPUT_FOLDER = os.path.join(out_folder, project_name)
 
 # Adding to config for report
 config["__output_folder__"] = os.path.abspath(OUTPUT_FOLDER)
