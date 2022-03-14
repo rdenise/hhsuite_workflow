@@ -301,8 +301,8 @@ all_tsv = all_tsv[(all_tsv.e_val <= snakemake.params.e_val) &
 adjacency = create_adjency_matrix(df_tsv=all_tsv,
                                     profiles=dict_prot.keys())
 
-if snakemake.input.annotations:
-    color_dict = pd.read_table(snakemake.input.annotations, index_col=0).color.to_dict()
+if snakemake.params.annotations:
+    color_dict = pd.read_table(snakemake.params.annotations, index_col=0).color.to_dict()
 else :
     color_dict = {}
 

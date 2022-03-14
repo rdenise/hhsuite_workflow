@@ -15,7 +15,6 @@ rule plot_similarities:
             ),
             name=PROT,
         ),
-        annotations=annotations_file,
     output:
         png=report(
             os.path.join(
@@ -36,6 +35,7 @@ rule plot_similarities:
             category="Plots",
         ),
     params:
+        annotations=annotations_file,
         e_val = plots_e_val,
         cov = plots_cov,
         pid = plots_qid,
