@@ -157,7 +157,10 @@ aln_format = config["format_aln"]
 # Get the alignment file name
 aln_ext = config["aln_ext"][1:] if config["aln_ext"].startswith('.') else config["aln_ext"]
 PROT, = glob_wildcards(os.path.join(config["alignments"], 
-                       "{prot}." + aln_ext))
+                       f"{{prot}}.{aln_ext}"))
+
+print(os.path.join(config["alignments"], 
+                       f"{{prot}}.{aln_ext}"))
 
 # Get the alignment folder right for hhmake
 if aln_format != "a3m":

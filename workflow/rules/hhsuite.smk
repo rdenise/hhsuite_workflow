@@ -127,11 +127,7 @@ rule hhsuite_db:
                 FOLDER_ALN,
                 "*.a3m",
         ),
-        database_name=os.path.join(
-            OUTPUT_FOLDER,
-            "databases",
-            "{database_name}",
-        ),
+        database_name=lambda w, output: output.hhm_fffiles[0].split("_hhm")[0],
         comparison=comparison,
     log:
         os.path.join(OUTPUT_FOLDER,
@@ -193,11 +189,7 @@ rule hhblits:
             "{name_hhm}.tsv",
         ),    
     params:
-        database_name=os.path.join(
-                    OUTPUT_FOLDER,
-                    "databases",
-                    f"{config['project_name']}"
-        ),
+        database_name=lambda w, input: input.hhm_fffiles[0].split("_hhm")[0],
         qid=hhblits_qid,
         e_val=hhblits_e_val,
         cov=hhblits_cov,
