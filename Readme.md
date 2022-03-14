@@ -57,7 +57,7 @@ In all following steps, we will assume that you are inside of that directory.
 Second, run 
 
 ```shell
-snakedeploy deploy-workflow https://github.com/rdenise/hhsuite_workflow . --tag 0.1.0
+snakedeploy deploy-workflow https://github.com/rdenise/hhsuite_workflow . --tag 0.1.1
 ```
 
 Snakedeploy will create two folders `workflow` and `config`. The former contains the deployment of the chosen workflow as a [Snakemake module](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#using-and-combining-pre-exising-workflows), the latter contains configuration files which will be modified in the next step in order to configure the workflow to your needs. Later, when executing the workflow, Snakemake will automatically find the main `Snakefile` in the `workflow` subfolder.
@@ -93,7 +93,7 @@ The resulting report.zip file can be passed on to collaborators, provided as a s
 
 ## Walk-Through and File Production
 
-This pipeline consists of ??? steps called rules that take input files and create output files. Here is a description of the pipeline.
+This pipeline consists of 6 steps called rules that take input files and create output files. Here is a description of the pipeline.
 
 1. As snakemake is set up, there is a last rule, called `all`, that serves to call the last output files and make sure they were created.
 
