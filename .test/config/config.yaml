@@ -1,5 +1,5 @@
 # path to your alignment folder
-alignments: "aln_folder"
+alignments: "aln"
 
 # extension of alignment file if a3m please add a3m as extention
 aln_ext: ".aln"
@@ -43,8 +43,6 @@ default_hhsuitedb_options:
 
 # Default value for plot
 default_values_plot:
-    # Color
-    color: '#131516' # This color is a dark grey similar to black
     # Turn color of the border a darker shade infer from the background if True else set the color to black
     colored_border: True
     # Annotation table that contain color for each hhm profiles, if non leave it empty ''

@@ -6,9 +6,7 @@
 
 ## Aim
 
-This software will produce ???
-
-???
+This software will produce a plot of the similarities between the hmm profiles created from the alignment files that you give as input. The workflow will produce multiples files using hhsuite package. The first one is the hmm profiles in HHM format using hhmake, the second is the results of hhblits that will compare the hmm profiles between each other. (results will be in hhr and tsv format). It will also produce the hmm profiles in HMM format using hhbuild from hmmer package.
 
 ## Installation
 
@@ -70,11 +68,8 @@ Snakedeploy will create two folders `workflow` and `config`. The former contains
 
 To configure this workflow, modify `config/config.yaml` according to your needs, following the explanations provided in the file.  
 
-??? and ??? sheet
-- ???
-
-Missing values can be specified by empty columns or by writing `NA`.
-
+annotations sheet
+- (Optional) if you want to define your own color, add alignment name to `config/annotations.tsv`. For each protein, the columns `HMM`, and `color` have to be defined. This file is optional, you can put the value to '' if you don't have one and want the workflow to create the color for you. The `HMM` column correspond to the name of the alignment file. The `color` columns correspond to the color you want in HEX format. Example of the `annotations file` is present in the `config` folder if needed or in the [doc](https://github.com/vdclab/sORTholog/blob/main/doc/dummy_annotations.tsv) folder in the GitHub page
 
 ### Step 4: run the workflow
 
@@ -95,22 +90,6 @@ snakemake --report report.zip --report-stylesheet config/report.css
 ```
 The resulting report.zip file can be passed on to collaborators, provided as a supplementary file in publications.
 
-### Side notes 
-
-The efficacy of snakemake is dependent upon pre-existing output files, but, without supply of these files by the user, the rule will be triggered.
-
-If you want to re-run a part of the pipeline without running previous rule you can specify the rule you want to run with the option `allowed-rules`
-
-```bash
-  --allowed-rules ALLOWED_RULES [ALLOWED_RULES ...]
-                        Only consider given rules. If omitted, all rules in Snakefile are used. Note that this is intended primarily for internal use and may lead to unexpected results otherwise. (default: None)
-```
-
-For exemple if I want to re-run from ??? to all
-
-```bash
-snakemake --cores 1 --use-conda --allowed-rules ??? ???? all
-```
 
 ## Walk-Through and File Production
 
@@ -124,41 +103,25 @@ This pipeline consists of ??? steps called rules that take input files and creat
    [project_name]/                           <- top-level project folder (your project_name)
    │
    │
-   ├── report.html                           <- This report file      
+   ├── report                                <- Folder with the report.html file inside    
    │
-   ├── logs                                  <- Collection of log outputs, e.g. from cluster managers
+   ├── logs                                  <- Collection of log outputs
    │
    ├── databases                             <- Generated analysis database related files
-   │   ├── all_taxid                         
-   │   │   ├─ protein_table.tsv              <- Table with the informations about the proteins of the downloaded taxid
-   │   │   ├─ summary_assembly_taxid.tsv     <- Table with the informations about the downloaded genome from NCBI
-   │   │   ├─ taxid_all_together.fasta       <- Fasta file of the downloaded taxid
-   │   │   └─ taxid_checked.txt              <- List of the downloaded taxid
-   │   │
-   │   ├── merge_fasta                       
-   │   │   └─ taxid_checked.txt              <- Fasta with the concatenation of the genome of interest and seeds
-   │   │
-   │   └── seeds                             
-   │       ├─ seeds.fasta                    <- Fasta file of the seeds
-   │       └─ new_seeds.tsv                  <- Table with the informations about the seeds
+   │    
+   ├── alignments                            <- If conversion needed the a3m format of the alignment will be here
    │
-   ├── analysis_thresholds                   <- (Optional) Generate by the rule report_thresholds
-   │   ├── tables                         
-   │   │   └─ table--seed.tsv                <- (Optional) Table with the information of each pair of hits in for the seed family (one per seed)
-   │   │
-   │   └── report_figure_thresholds.html     <- (Optional) HTML report with the plots made by report_thresholds                  
+   ├── hhblits                               <- Folder with the results of hhblits
+   │   ├── hhr                               <- Results of hhblits in hhr format
+   │   └── tsv                               <- Results of hhblits in tsv format
    │
-   └── results                               <- Final results for sharing with collaborators, typically derived from analysis sets
-       ├── fasta                             <- (Optional) folder with the fasta file of the orthologs of the seeds
-       ├── patab_melt.tsv                    <- Table with the information of sORTholog one information by line
-       ├── patab_table.tsv                   <- Table with the information of presence absence with genome in index and seeds in columns and proteins Id in the cell
-       └── plots                             <- Plots and table on which the plot are created
+   ├── hhm                                   <- HMM profiles in HHM format made with hhmake
+   ├── hmm                                   <- HMM profiles in HMM format made with hmmbuild
+   │
+   └── plots                                 <- Folder of the final results with the figure in pdf and png 
+
 
 ```
-
-3. Before starting the pipeline, your taxids will be checked and updated for the lowest descendant levels. This will create a file of checked taxids. It will skip this step if this file already exists.
-
-4. When restarting the pipeline, the software will check if you made any changes in the seed file before running. If changes have been made, it will run what is necessary, else nothing will happen.
 
 ### Pipeline in image 
 

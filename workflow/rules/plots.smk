@@ -15,16 +15,25 @@ rule plot_similarities:
             ),
             name=PROT,
         ),
+        annotations=annotations_file,
     output:
-        png=os.path.join(
+        png=report(
+            os.path.join(
             OUTPUT_FOLDER,
             "plots",
             "similarities_hhm_profiles.png",
+            ),
+            caption="../report/similarities_png.rst",
+            category="Plots",
         ),
-        pdf=os.path.join(
+        pdf=report(
+            os.path.join(
             OUTPUT_FOLDER,
             "plots",
             "similarities_hhm_profiles.pdf",
+            ),
+            caption="../report/similarities_pdf.rst",
+            category="Plots",
         ),
     params:
         e_val = plots_e_val,

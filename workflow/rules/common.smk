@@ -46,22 +46,6 @@ def get_final_output():
 
 
 ##########################################################################
-
-
-def check_color_seed(annotations_df):
-    """
-    Infer color if color is not set by the user in the annotations' file
-    """
-
-    if "color" not in annotations_df.columns:
-        annotations_df['color'] = config["default_values_plot"]["color"]
-    else:
-        annotations_df.fillna(value={'color':config["default_values_plot"]["color"]}, inplace=True)
-
-    return annotations_df
-
-
-##########################################################################
 ##########################################################################
 ##
 ##                                Variables
@@ -83,8 +67,6 @@ annotations_dtypes = {
 
 annotations_table = pd.read_table(annotations_file, dtype=annotations_dtypes)
 
-# Check color of the seeds
-annotations_table = check_color_seed(annotations_table)
 
 ##########################################################################
 ##########################################################################
@@ -170,14 +152,12 @@ plots_cov = config["default_values_plot"]["cov"]
 ##########################################################################
 
 # Get the alignment format
-aln_format = config["format_aln"][1:] if config["format_aln"].startswith('.') else config["format_aln"]
+aln_format = config["format_aln"]
 
 # Get the alignment file name
+aln_ext = config["aln_ext"][1:] if config["aln_ext"].startswith('.') else config["aln_ext"]
 PROT, = glob_wildcards(os.path.join(config["alignments"], 
-                       "{prot}." + config["aln_ext"]))
-
-# Get extension alignment
-aln_ext = config["aln_ext"]
+                       "{prot}." + aln_ext))
 
 # Get the alignment folder right for hhmake
 if aln_format != "a3m":
