@@ -6,3 +6,4 @@ dependencies:
   - numpy = 1.22.0
   - networkx = 2.7.1
   - graphviz = 3.0.0
+  - pygraphviz = 1.9
