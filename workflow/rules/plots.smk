@@ -39,7 +39,9 @@ rule plot_similarities:
         e_val = plots_e_val,
         cov = plots_cov,
         pid = plots_qid,
-        border_color = config['default_values_plot']['colored_border']
+        border_color = config['default_values_plot']['colored_border'],
+        size_node = config['default_values_plot']['size'],
+        font_size = config['default_values_plot']['font_size'],
     log:
         os.path.join(OUTPUT_FOLDER, "logs", "plots", "similarities_hhblits.log"),
     conda:

@@ -98,12 +98,20 @@ properties:
         type: number
         minimum: 0
         maximum: 1
+      size:
+        type: number
+        minimum: 0
+      font_size:
+        type: number
+        minimum: 0        
     required:
       - e_val
       - qid
       - cov        
       - colored_border
       - annotation_table
+      - size
+      - font_size
 
 required:
   - alignments

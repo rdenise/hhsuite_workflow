@@ -99,21 +99,21 @@ rule hhsuite_db:
                 os.path.join(
                     OUTPUT_FOLDER,
                     "databases",
-                    "{database_name}_a3m"),
+                    "databases_a3m"),
                     ".ffdata", ".ffindex"
         ),
         cs219_fffiles=multiext(
                 os.path.join(
                     OUTPUT_FOLDER,
                     "databases",
-                    "{database_name}_cs219"),
+                    "databases_cs219"),
                     ".ffdata", ".ffindex"
         ),
         hhm_fffiles=multiext(
                 os.path.join(
                     OUTPUT_FOLDER,
                     "databases",
-                    "{database_name}_hhm"),
+                    "databases_hhm"),
                     ".ffdata", ".ffindex"
         ),
     params:
@@ -133,7 +133,7 @@ rule hhsuite_db:
         os.path.join(OUTPUT_FOLDER,
                      "logs",
                      "hhsuite_db",
-                     "{database_name}.log"),
+                     "databases.log"),
     resources:
         cpus=4,
     conda:
@@ -158,21 +158,21 @@ rule hhblits:
                 os.path.join(
                     OUTPUT_FOLDER,
                     "databases",
-                    f"{config['project_name']}_a3m"),
+                    "databases_a3m"),
                     ".ffdata", ".ffindex"
         ),
         cs219_fffiles=multiext(
                 os.path.join(
                     OUTPUT_FOLDER,
                     "databases",
-                    f"{config['project_name']}_cs219"),
+                    "databases_cs219"),
                     ".ffdata", ".ffindex"
         ),        
         hhm_fffiles=multiext(
                 os.path.join(
                     OUTPUT_FOLDER,
                     "databases",
-                    f"{config['project_name']}_hhm"),
+                    "databases_hhm"),
                     ".ffdata", ".ffindex"
         ),        
     output:

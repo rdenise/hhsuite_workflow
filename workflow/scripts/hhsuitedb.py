@@ -47,6 +47,7 @@ for path in os.environ['PATH'].split(os.pathsep):
     if os.path.isfile(os.path.join(path.replace('bin', 'scripts'), 'hhsuitedb.py')):
         HHSCRIPT = path.replace('bin', 'scripts')
         HHLIB = os.path.dirname(path)
+        break
 
 sys.path.insert(0, HHSCRIPT)
 

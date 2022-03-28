@@ -55,4 +55,7 @@ default_values_plot:
     qid: 0
     # Minimum coverage with master sequence [0,1]
     cov: 0.5
-    
+    # Size of the node in the plot: if you have too much node maybe reduce the node_size to 50
+    size: 50
+    # Font size of the label
+    font_size: 10
