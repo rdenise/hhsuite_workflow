@@ -105,7 +105,9 @@ properties:
         type: number
         minimum: 0
       graph_layout:
-        type: string      
+        type: string
+      singleton:
+        type: boolean   
     required:
       - e_val
       - qid
@@ -115,6 +117,7 @@ properties:
       - size
       - font_size
       - graph_layout
+      - singleton
 
 required:
   - alignments

@@ -173,11 +173,16 @@ def visu_graph(identity_df, output, dict_color={}, threshold=0.5) :
     # Create the graph from adjacency matrix
     graph = nx.from_numpy_matrix(identity_df.values)
     graph = nx.relabel_nodes(graph, dict(enumerate(identity_df.columns)))
+    outdeg = graph.degree()
+
+    if not snakemake.params.singleton:
+        to_remove = [n[0] for n in outdeg if outdeg[n[0]] == 0]
+
+        graph.remove_nodes_from(to_remove)
 
     # Get name of all nodes/genes
-    all_gene = identity_df.index.unique()
-    num_gene = all_gene.shape[0]
-    all_gene = sorted(all_gene)
+    all_gene = list(graph)
+    num_gene = len(all_gene)
 
     # Create the dict of color if none given
     if not dict_color:
@@ -202,7 +207,7 @@ def visu_graph(identity_df, output, dict_color={}, threshold=0.5) :
     edges,edge_colors = zip(*nx.get_edge_attributes(graph,'color').items())   
 
     # Choose between : dot, neato, fdp, sfdp, twopi, circo
-    pos=graphviz_layout(graph, prog="neato")
+    pos=graphviz_layout(graph, prog=snakemake.params.graph_layout)
 
     # Put the color of the node
     nx.set_node_attributes(graph, dict_color, "color")    
