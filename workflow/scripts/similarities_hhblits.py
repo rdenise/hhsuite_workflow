@@ -226,7 +226,7 @@ def visu_graph(identity_df, output, dict_color={}, threshold=0.5) :
     # If you have too much node maybe reduce the node_size to 50
     nx.draw_networkx_nodes(graph, pos, node_color=nodes_colors, node_size=snakemake.params.size_node, edgecolors=nodes_edges_color)
 
-    nx.draw_networkx_labels(graph,pos, font_size=10)
+    nx.draw_networkx_labels(graph,pos, font_size=snakemake.params.font_size)
 
     nx.draw_networkx_edges(graph,pos,edgelist=edges, edge_color=edge_colors, width=width_edges)
 

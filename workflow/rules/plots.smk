@@ -42,6 +42,7 @@ rule plot_similarities:
         border_color = config['default_values_plot']['colored_border'],
         size_node = config['default_values_plot']['size'],
         font_size = config['default_values_plot']['font_size'],
+        graph_layout = config['default_values_plot']['graph_layout'],
     log:
         os.path.join(OUTPUT_FOLDER, "logs", "plots", "similarities_hhblits.log"),
     conda:

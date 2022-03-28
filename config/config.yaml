@@ -59,3 +59,5 @@ default_values_plot:
     size: 50
     # Font size of the label
     font_size: 10
+    # The Graph layout: dot, neato, fdp, sfdp, twopi, circo
+    graph_layout: neato

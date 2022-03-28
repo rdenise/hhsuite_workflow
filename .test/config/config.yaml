@@ -56,4 +56,6 @@ default_values_plot:
     # Size of the node in the plot: if you have too much node maybe reduce the node_size to 50
     size: 50
     # Font size of the label
-    font_size: 10    
+    font_size: 10
+    # The Graph layout: dot, neato, fdp, sfdp, twopi, circo
+    graph_layout: neato
