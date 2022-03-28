@@ -177,7 +177,6 @@ def visu_graph(identity_df, output, dict_color={}, threshold=0.5) :
 
     if not snakemake.params.singleton:
         to_remove = [n[0] for n in outdeg if outdeg[n[0]] == 0]
-
         graph.remove_nodes_from(to_remove)
 
     # Get name of all nodes/genes
